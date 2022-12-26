@@ -1,0 +1,22 @@
+{% extends "/layout.htm" %}
+
+{% block title %}
+    Просмотр спорстменов
+{% endblock %}
+
+{% block body %}
+
+    <h4>Ваши спортсмены</h4>
+
+    <ul class="list-group w-100">
+        {% if sportsmans %}
+            {% for sportsman in sportsmans %}
+                <li class="list-group-item">
+                    {{ sportsman.name }}
+                    <b> Вес: </b> {{ sportsman.weight }}кг     
+                    <b> Родитель:</b>  {{sportsman.parent_name}} 
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+{% endblock %}

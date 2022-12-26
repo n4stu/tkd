@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION get_competition_by_id(
+	_competition_id integer
+)
+RETURNS TABLE (
+	id integer,
+	name varchar,
+	level integer,
+	city varchar,
+	address varchar,
+	start_date timestamp(0),
+	end_date timestamp(0),
+	last_update timestamp(0),
+	
+	level_name varchar
+) 
+AS $$
+BEGIN
+	RETURN QUERY EXECUTE format('SELECT c.*, cl.description FROM competitions c LEFT JOIN competitions_level cl ON cl.id=c.level WHERE c.id = %L', _competition_id);
+END;
+$$ 
+LANGUAGE 'plpgsql';

@@ -1,0 +1,12 @@
+CREATE FUNCTION competiotion_last_update_updator_insert()
+RETURNS trigger
+AS $$
+    BEGIN
+		UPDATE competitions SET last_update = NOW()::timestamp(0) WHERE id=NEW.competition_id;
+        RETURN NEW;
+    END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER competiotion_last_update_updator_insert BEFORE INSERT ON requests
+    FOR EACH ROW EXECUTE PROCEDURE competiotion_last_update_updator_insert();

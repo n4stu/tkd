@@ -1,0 +1,3 @@
+CREATE VIEW coach_view AS
+SELECT c.*, gp.description, cl.name, cl.city, cl.address, h.name hall_name, h.location FROM coach c LEFT JOIN gup_dan gp
+		ON gp.id = c.gup_dan_id LEFT JOIN club cl ON cl.id = c.club_id LEFT JOIN hall h ON h.id=cl.id

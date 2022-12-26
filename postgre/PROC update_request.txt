@@ -1,0 +1,16 @@
+create or replace PROCEDURE update_request(
+	_competition_id integer,
+	_coach_id integer,
+	_sportsman_id integer,
+	_action boolean
+)
+as $$
+begin
+	IF (_action = true) THEN
+		INSERT INTO requests VALUES (DEFAULT, _sportsman_id, _coach_id, _competition_id);
+	ELSE
+		DELETE FROM requests WHERE coach_id=_coach_id AND sportsman_id=_sportsman_id;
+	END IF;
+end;
+$$
+language plpgsql;

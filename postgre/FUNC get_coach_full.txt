@@ -1,0 +1,29 @@
+CREATE OR REPLACE FUNCTION get_coach_full(
+	_login varchar
+)
+RETURNS TABLE (
+	id integer,
+	name varchar,
+	gup_dan_id integer,
+	club_id integer,
+	birth_date date,
+	login varchar,
+	password varchar,
+	photo varchar,
+	
+	gup_dan varchar,
+	
+	club_name varchar,
+	club_city varchar,
+	club_address varchar,
+	
+	hall_name varchar,
+	hall_location varchar
+) 
+AS $$
+BEGIN
+	RETURN QUERY EXECUTE format('SELECT * FROM coach_view WHERE login = %L', _login);
+END;
+$$ 
+LANGUAGE 'plpgsql';
+

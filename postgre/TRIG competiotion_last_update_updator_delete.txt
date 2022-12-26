@@ -1,0 +1,12 @@
+CREATE FUNCTION competiotion_last_update_updator_delete()
+RETURNS trigger
+AS $$
+    BEGIN
+		UPDATE competitions SET last_update = NOW()::timestamp(0) WHERE id=OLD.competition_id;
+        RETURN OLD;
+    END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER competiotion_last_update_updator_delete BEFORE DELETE ON requests
+    FOR EACH ROW EXECUTE PROCEDURE competiotion_last_update_updator_delete();

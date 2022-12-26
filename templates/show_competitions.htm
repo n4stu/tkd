@@ -1,0 +1,70 @@
+{% extends "/layout.htm" %}
+
+{% block title %}
+    Просмотр соревнований
+{% endblock %}
+
+{% block body %}
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            {% for category, text in get_flashed_messages(True) %}
+                <div class="alert alert-{{ category }}">{{ text }}</div>  
+            {% endfor %}
+
+            {% for field in form if field.name not in ["csrf_token", "submit"] %}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="col-4 d-flex align-items-baseline">
+                    {{ field.label(class="form-label") }}
+                    {{ field(class="form-control form-control-sm") }}
+                </div>
+
+            {% endfor %}
+            <div class="col-4 d-flex align-items-baseline">
+                {{ form.submit(class="btn btn-success px-5") }}
+            </div>
+        </div>
+    </form>
+    <hr>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Уровень соревнований</th>
+                <th scope="col">Город</th>
+                <th scope="col">Место проведения</th>
+                <th scope="col">Дата начала</th>
+                <th scope="col">Дата окончания</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if competitions %}
+                {% for competition in competitions %}
+                    <tr>
+                        <td>
+                            {% if table == "coach" %}
+                                <a href="{{ url_for('competitions_show', competition_id=competition.id) }}" class="link-primary text-decoration-none">
+                                    {{ competition.name }}
+                                </a>
+                            {% else %}
+                                {{ competition.name }}
+                            {% endif %}
+                            
+                        </td>
+                        <td>{{ competition.level_name }}</td>
+                        <td>{{ competition.city }}</td>
+                        <td>{{ competition.address }}</td>
+                        <td>{{ competition.start_date }}</td>
+                        <td>{{ competition.end_date }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

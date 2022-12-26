@@ -1,0 +1,40 @@
+CREATE OR REPLACE FUNCTION get_sportsman_full(
+	_login varchar
+)
+RETURNS TABLE (
+	id integer,
+	name varchar,
+	birth_date date,
+	weight integer,
+	hall_no integer,
+	parent_id integer,
+	club_id integer,
+	coach_id integer,
+	passport_no integer,
+	gup_dan_id integer,
+	login varchar,
+	password varchar,
+	photo varchar,
+	
+	hall_name varchar,
+	hall_location varchar,
+	
+	parent_name varchar,
+	
+	club_name varchar,
+	club_city varchar,
+	club_address varchar,
+	
+	coach_name varchar,
+	
+	gup_dan varchar,
+	role integer
+) 
+AS $$
+BEGIN
+	RETURN QUERY EXECUTE format('SELECT s.*, h.name, h.location, p.name, c.name, c.city, c.address, ch.name, gp.description, 1 t FROM sportsman s
+		LEFT JOIN hall h ON h.id = s.hall_no LEFT JOIN parent p ON p.id = s.parent_id LEFT JOIN club c ON c.id = s.club_id
+		LEFT JOIN coach ch ON ch.id = s.coach_id LEFT JOIN gup_dan gp ON gp.id = s.gup_dan_id WHERE s.login = %L', _login);
+END;
+$$ 
+LANGUAGE 'plpgsql';

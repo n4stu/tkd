@@ -1,0 +1,26 @@
+CREATE OR REPLACE FUNCTION get_coach_sportsmans(
+	_coach_id integer
+)
+RETURNS TABLE (
+	id integer,
+	name varchar,
+	birth_date date,
+	weight integer,
+	hall_no integer,
+	parent_id integer,
+	club_id integer,
+	coach_id integer,
+	passport_no integer,
+	gup_dan_id integer,
+	login varchar,
+	password varchar,
+	photo varchar,
+
+	parent_name varchar
+)
+AS $$
+BEGIN
+	RETURN QUERY EXECUTE format('SELECT s.*, p.name FROM sportsman s LEFT JOIN parent p ON p.id=s.parent_id WHERE coach_id = %L', _coach_id);
+END;
+$$ 
+LANGUAGE 'plpgsql';

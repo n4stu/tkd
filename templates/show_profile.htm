@@ -1,0 +1,50 @@
+{% extends "/layout.htm" %}
+
+{% block title %}
+    {{ user.name }}
+{% endblock %}
+
+{% block body %}
+    <div>
+        <div class="row">
+            <div class="col-2">
+                {% if user.photo %}
+                    <img src="/static/images/{{ user.photo }}" class="w-100">
+                {% else %}
+                    <img src="http://via.placeholder.com/360x640" class="w-100">
+                {% endif %}
+            </div>
+
+            <div class="col">
+                {% for category, text in get_flashed_messages(True) %}
+                    <div class="alert alert-{{ category }}">{{ text }}</div>  
+                {% endfor %}
+
+                <p>ФИО: <b>{{ user.name }}</b></p>
+                <p>Дата рождения: <b>{{ user.birth_date }}</b></p>
+                <p>Клуб: <b>{{ user.club_name }} [ {{ user.club_address}} ]</b></p>
+                <p>Зал: <b>{{ user.hall_name }}</b></p>
+                {% if user.coach_name %}
+                    <p>Тренер: <b>{{ user.coach_name }}</b></p>
+                {% endif %}
+                
+                <p>Квалификация: <b>{{ user.gup_dan }}</b></p>
+                {% if user.weight %}
+                    <p>
+                        <form action="" method="POST" class="d-flex align-items-baseline">
+                            {{ form.hidden_tag() }}
+
+                            <div class="alert alert-danger" role="alert">{{ form.errors.weight }}</div>
+
+                            {{ form.weight.label(class="form-label me-3") }}
+                            {{ form.weight(class="form-control form-control-sm w-25 me-3") }}
+
+                            {{ form.submit(class="btn btn-secondary btn-sm") }}
+                        </form>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

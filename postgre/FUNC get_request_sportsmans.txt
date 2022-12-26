@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION get_request_sportsmans(
+	_competition_id integer
+)
+RETURNS TABLE (
+	id integer,
+	sportsman_id integer,
+	coach_id integer,
+	competiotion_id integer,
+	
+	sportsman_name varchar,
+	sportsman_weight integer
+) 
+AS $$
+BEGIN
+	RETURN QUERY EXECUTE format('SELECT r.*, s.name, s.weight FROM requests r LEFT JOIN sportsman s ON s.id = r.sportsman_id WHERE r.competition_id = %L', _competition_id);
+END;
+$$ 
+LANGUAGE 'plpgsql';

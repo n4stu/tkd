@@ -1,0 +1,11 @@
+CREATE OR REPLACE FUNCTION get_competitions_levels()
+RETURNS TABLE (
+	id integer,
+	description varchar
+)
+AS $$
+BEGIN
+	RETURN QUERY EXECUTE format('SELECT * FROM competitions_level');
+END;
+$$ 
+LANGUAGE 'plpgsql';

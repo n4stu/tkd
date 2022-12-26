@@ -1,0 +1,32 @@
+{% extends "/layout.htm" %}
+
+{% block title %}
+    {{ competition.name }} {{ competition. start_date }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ competition.name }}</h1>
+    <h6>{{ competition.start_date }}</h6>
+    <h6>Уровень: {{ competition.level_name }}</h6>
+    <h6>Место: {{ competition.address }}</h6>
+    <hr>
+    <h5>Участники</h5>
+    
+    {% for sportsman in c_sportsmans %}
+        <p>
+            {{ sportsman.name }}
+            {% if sportsman.id in s_ids %}
+                <a href="{{ url_for('competitions_show', competition_id=competition.id, delete=sportsman.id) }}" class="btn btn-success btn-sm">
+                    <i class="bi bi-check2"></i>
+                </a>
+            {% else %}
+            <a href="{{ url_for('competitions_show', competition_id=competition.id, add=sportsman.id) }}" class="btn btn-danger btn-sm">
+                <i class="bi bi-dash-lg"></i>
+            </a>
+            {% endif %}
+        </p>
+    {% endfor %}
+    <hr>
+    Последнее обновление заявки: {{ competition.last_update }}
+{% endblock %}

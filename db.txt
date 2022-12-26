@@ -1,0 +1,51 @@
+CREATE ROLE Sportsman LOGIN;
+CREATE ROLE Coach LOGIN;
+
+GRANT SELECT ON
+	competitions,
+	competitions_level,
+	sportsman,
+	parent,
+	club,
+	hall, 
+	gup_dan, 
+	coach
+TO Sportsman, Coach;
+GRANT SELECT ON request TO Coach;
+
+GRANT UPDATE ON 
+	sportsman
+TO Sportsman;
+
+
+GRANT UPDATE, INSERT ON 
+	requests
+TO Coach;
+
+
+
+
+
+GRANT EXECUTE ON FUNCTION get_coach_full TO Coach
+GRANT EXECUTE ON FUNCTION get_coach_sportsmans TO Coach
+GRANT EXECUTE ON FUNCTION get_competiotions_cities TO Coach, Sportsman
+GRANT EXECUTE ON FUNCTION get_competition_by_id TO Coach
+GRANT EXECUTE ON FUNCTION get_competitions_levels TO Coach, Sportsman
+GRANT EXECUTE ON FUNCTION get_filtered_clubs TO Coach, Sportsman
+GRANT EXECUTE ON FUNCTION get_filtered_competitions TO Coach, Sportsman
+GRANT EXECUTE ON FUNCTION get_request_sportsmans TO Coach
+GRANT EXECUTE ON FUNCTION get_sportsman_full TO Sportsman
+
+
+GRANT EXECUTE ON PROCEDURE sportsman_update_weight TO Sportsman
+GRANT EXECUTE ON PROCEDURE update_request TO Coach
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+create or replace PROCEDURE sportsman_update_weight(
+	_sportsman_id integer,
+	_weight integer
+)
+as $$
+begin
+    UPDATE sportsman SET weight=_weight WHERE id=_sportsman_id;
+end;
+$$
+language plpgsql;

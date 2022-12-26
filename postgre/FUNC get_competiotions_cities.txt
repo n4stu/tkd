@@ -1,0 +1,10 @@
+CREATE OR REPLACE FUNCTION get_competiotions_cities()
+RETURNS TABLE (
+	city varchar
+)
+AS $$
+BEGIN
+	RETURN QUERY EXECUTE format('SELECT DISTINCT city FROM competitions');
+END;
+$$ 
+LANGUAGE 'plpgsql';

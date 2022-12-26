@@ -1,0 +1,31 @@
+CREATE OR REPLACE FUNCTION get_filtered_competitions(
+	_level integer,
+	_city varchar
+)
+RETURNS TABLE (
+	id integer,
+	name varchar,
+	level integer,
+	city varchar,
+	address varchar,
+	start_date timestamp(0),
+	end_date timestamp(0),
+	last_update timestamp(0),
+	level_name varchar
+)
+AS $$
+DECLARE
+    statement TEXT;
+BEGIN
+	statement := format('SELECT c.*, cl.description FROM competitions c LEFT JOIN competitions_level cl ON cl.id = c.level WHERE 1=1 AND');
+	IF (_level IS NOT NULL) THEN
+		statement := format('%s c.level = %L AND', statement, _level);
+	END IF;
+	IF (_city IS NOT NULL) THEN
+		statement := format('%s c.city = %L AND', statement, _city);
+	END IF;
+	statement := format('%s 1=1 ORDER BY c.start_date DESC;', statement);
+	RETURN QUERY EXECUTE statement;
+END;
+$$ 
+LANGUAGE 'plpgsql';
